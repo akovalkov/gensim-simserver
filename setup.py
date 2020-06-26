@@ -66,7 +66,7 @@ setup(
     install_requires = [
         'gensim >= 0.8.5',
         'Pyro4 >= 4.8',
-        'sqlitedict >= 1.0.8',
+        'sqlitedict >= 1.6.0',
     ],
 
     include_package_data = True,
