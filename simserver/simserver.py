@@ -128,7 +128,7 @@ class SimIndex(gensim.utils.SaveLoad):
             try:
                 os.remove(fname)
                 logger.info("deleted %s" % fname)
-            except Exception, e:
+            except Exception as e:
                 logger.warning("failed to delete %s: %s" % (fname, e))
         for val in self.__dict__.keys():
             try:
