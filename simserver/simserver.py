@@ -44,7 +44,19 @@ SHARD_SIZE = 65536 # spill index shards to disk in SHARD_SIZE-ed chunks of docum
 DEFAULT_NUM_TOPICS = 400 # use this many topics for topic models unless user specified a value
 JOURNAL_MODE = 'OFF' # don't keep journals in sqlite dbs
 
+class NoCM(object):
+    def acquire(self):
+        pass
 
+    def release(self):
+        pass
+
+    def __enter__(self):
+        pass
+    def __exit__(self, type, value, traceback):
+        pass
+
+nocm = NoCM()
 
 def merge_sims(oldsims, newsims, clip=None):
     """Merge two precomputed similarity lists, truncating the result to `clip` most similar items."""
@@ -453,7 +465,7 @@ class SimServer(object):
             raise ValueError("%r must be a writable directory" % basename)
         self.basename = basename
         self.use_locks = use_locks
-        self.lock_update = threading.RLock() if use_locks else gensim.utils.nocm
+        self.lock_update = threading.RLock() if use_locks else nocm
         try:
             self.fresh_index = SimIndex.load(self.location('index_fresh'))
         except:
